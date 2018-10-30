@@ -45,17 +45,14 @@
     <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.S3.3.3.24\lib\net45\AWSSDK.S3.dll</HintPath>
     </Reference>
-    <Reference Include="Eto">
-      <HintPath>..\..\..\..\Grasshopper\rhino wip\Rhino WIP\Rhino WIP\System\Eto.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Eto, Version=2.4.6866.11571, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
+      <HintPath>..\packages\RhinoCommon.6.9.18271.20591\lib\net45\Eto.dll</HintPath>
     </Reference>
     <Reference Include="GH_IO">
-      <HintPath>..\..\..\..\Grasshopper\rhino wip\Rhino WIP\Rhino WIP\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino WIP\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
     </Reference>
     <Reference Include="Grasshopper">
-      <HintPath>..\..\..\..\Grasshopper\rhino wip\Rhino WIP\Rhino WIP\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino WIP\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
     </Reference>
     <Reference Include="Nancy, Version=1.4.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.1.4.4\lib\net40\Nancy.dll</HintPath>
@@ -70,8 +67,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RhinoCommon">
-      <HintPath>..\..\..\..\Grasshopper\rhino wip\Rhino WIP\Rhino WIP\System\RhinoCommon.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino WIP\System\RhinoCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="RhinoWindows">
+      <HintPath>..\..\..\..\..\..\Program Files\Rhino WIP\System\RhinoWindows.dll</HintPath>
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.2.7.1\lib\net46\Serilog.dll</HintPath>
@@ -154,5 +153,12 @@
       <FilesToDelete Include="$(TargetDir)\*.dylib" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
+  </Target>
+  <Import Project="..\packages\RhinoCommon.6.9.18271.20591\build\net45\RhinoCommon.targets" Condition="Exists('..\packages\RhinoCommon.6.9.18271.20591\build\net45\RhinoCommon.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\RhinoCommon.6.9.18271.20591\build\net45\RhinoCommon.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RhinoCommon.6.9.18271.20591\build\net45\RhinoCommon.targets'))" />
   </Target>
 </Project>
