@@ -77,7 +77,6 @@
     </Reference>
     <Reference Include="RhinoCommon">
       <HintPath>..\..\..\..\..\..\Program Files\Rhino WIP\System\RhinoCommon.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="RhinoWindows, Version=7.0.18289.6475, Culture=neutral, PublicKeyToken=552281e97c755530, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
