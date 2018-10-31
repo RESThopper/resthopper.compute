@@ -36,6 +36,8 @@ namespace compute.geometry
                 string rhinoSystemDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 + @"\Grasshopper\rhino wip\Rhino WIP\Rhino WIP\System";
 
+                rhinoSystemDir = @"C:\Program Files\Rhino WIP\System";
+
                 return Assembly.LoadFrom(Path.Combine(rhinoSystemDir, rhinoCommonAssemblyName + ".dll"));
             };
         }
@@ -78,8 +80,9 @@ namespace compute.geometry
         public void Start(int http_port)
         {
             Log.Information("Launching RhinoCore library as {User}", Environment.UserName);
-            //RhinoLib.LaunchInProcess(RhinoLib.LoadMode.FullUserInterface, 0);
-            Program._rhino = new RhinoCore(new string[] { "/nosplash" }, WindowStyle.Hidden);
+            RhinoLib.LaunchInProcess(RhinoLib.LoadMode.FullUserInterface, 0);
+            //Program._rhino = new RhinoCore(new string[] { "/nosplash" }, WindowStyle.Minimized);
+            //Program._rhino = new RhinoCore(new string[] {}, WindowStyle.Minimized);
 
             // Load IronPython
             Rhino.PlugIns.PlugIn.LoadPlugIn(new Guid(0x814D908A, 0xE25C, 0x493D, 0x97, 0xE9, 0xEE, 0x38, 0x61, 0x95, 0x7F, 0x49));
@@ -87,9 +90,10 @@ namespace compute.geometry
             Rhino.PlugIns.PlugIn.LoadPlugIn(new Guid(0xB45A29B1, 0x4343, 0x4035, 0x98, 0x9E, 0x04, 0x4E, 0x85, 0x80, 0xD9, 0xCF));
 
             var config = new HostConfiguration();
-#if DEBUG
-            //config.RewriteLocalhost = false;  // Don't require URL registration since geometry service always runs on localhost
-#endif
+
+            config.RewriteLocalhost = true;  // Don't require URL registration since geometry service always runs on localhost
+            config.UrlReservations.CreateAutomatically = true;
+
             var listenUriList = new List<Uri>();
 
             if (http_port > 0)
@@ -105,11 +109,17 @@ namespace compute.geometry
                 foreach (var uri in listenUriList)
                     Log.Information("compute.geometry running on {Uri}", uri.OriginalString);
             }
+            catch (Exception e)
+            {
+                Log.Error(e.ToString());
+            }
+            /*
             catch (AutomaticUrlReservationCreationFailureException)
             {
                 Log.Error(GetAutomaticUrlReservationCreationFailureExceptionMessage(listenUriList));
                 Environment.Exit(1);
             }
+            */
         }
 
         // TODO: move this somewhere else

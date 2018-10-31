@@ -34,6 +34,8 @@ class RhinoLib
 #else
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             string rhinoSystemDir = System.IO.Path.Combine(programFiles, "Rhino WIP", "System");
+
+            
 #endif
             Environment.SetEnvironmentVariable("path", envPath + ";" + rhinoSystemDir);
             _pathsSet = true;
