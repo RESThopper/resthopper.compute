@@ -80,14 +80,15 @@ namespace compute.geometry
         public void Start(int http_port)
         {
             Log.Information("Launching RhinoCore library as {User}", Environment.UserName);
-            RhinoLib.LaunchInProcess(RhinoLib.LoadMode.FullUserInterface, 0);
-            //Program._rhino = new RhinoCore(new string[] { "/nosplash" }, WindowStyle.Minimized);
+            //RhinoLib.LaunchInProcess(RhinoLib.LoadMode.FullUserInterface, 0);
+            Program._rhino = new RhinoCore(new string[] { "/nosplash" }, WindowStyle.Minimized);
             //Program._rhino = new RhinoCore(new string[] {}, WindowStyle.Minimized);
 
             // Load IronPython
             Rhino.PlugIns.PlugIn.LoadPlugIn(new Guid(0x814D908A, 0xE25C, 0x493D, 0x97, 0xE9, 0xEE, 0x38, 0x61, 0x95, 0x7F, 0x49));
             // Load Grasshopper
             Rhino.PlugIns.PlugIn.LoadPlugIn(new Guid(0xB45A29B1, 0x4343, 0x4035, 0x98, 0x9E, 0x04, 0x4E, 0x85, 0x80, 0xD9, 0xCF));
+            //Rhino.PlugIns.PlugIn.LoadPlugIn(Rhino.PlugIns.PlugIn.IdFromName("Grasshopper"));
 
             var config = new HostConfiguration();
 
